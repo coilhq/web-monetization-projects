@@ -26,11 +26,14 @@ export function CreateBlindToken(): BlindToken | void {
   }
 }
 
-export function GenerateNewTokens(n: number): BlindToken[] {
+export function GenerateNewTokens(
+  n: number,
+  creator = CreateBlindToken
+): BlindToken[] {
   const tokens: BlindToken[] = []
 
   for (let i = 0; i < n; ++i) {
-    const blindToken = CreateBlindToken()
+    const blindToken = creator()
 
     if (!blindToken) {
       console.warn(

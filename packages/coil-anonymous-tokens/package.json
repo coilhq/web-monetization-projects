@@ -31,6 +31,7 @@
     "upkeep": "cd ../.. && yarn upkeep"
   },
   "dependencies": {
+    "@coil/privacypass-elliptic": "0.0.0",
     "@coil/privacypass-sjcl": "0.0.0",
     "node-fetch": "^2.6.0"
   },
