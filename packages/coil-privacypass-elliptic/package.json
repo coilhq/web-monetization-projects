@@ -1,24 +1,18 @@
 {
   "$schema": "../coil-monorepo-upkeep/resources/package-json-schema-nested-overrides.json",
-  "$overRideUpKeep": {
-    "license": "BSD-3-Clause",
-    "scripts": {
-      "postinstall": "cd ../../node_modules/sjcl && ./configure --without-all --with-ecc --with-convenience --with-codecBytes --with-codecHex --compress=none && make sjcl.js"
-    }
-  },
-  "name": "@coil/privacypass-sjcl",
+  "name": "@coil/privacypass-elliptic",
   "version": "0.0.0",
   "private": false,
   "keywords": [
     "ilp",
     "web-monetization"
   ],
-  "homepage": "https://github.com/coilhq/web-monetization-projects/tree/master/packages/coil-privacypass-sjcl",
+  "homepage": "https://github.com/coilhq/web-monetization-projects/tree/master/packages/coil-privacypass-elliptic",
   "repository": {
     "type": "git",
     "url": "git@github.com:coilhq/web-monetization-projects.git"
   },
-  "license": "BSD-3-Clause",
+  "license": "Apache-2.0",
   "author": "Coil Team <info@coil.com>",
   "main": "./build",
   "types": "./build",
@@ -28,7 +22,6 @@
     "build:ts:watch": "yarn build:ts --watch",
     "clean:build": "rimraf build",
     "format": "yarn prettier && YARN_LINT_FIX=1 yarn lint:all --fix --quiet",
-    "postinstall": "cd ../../node_modules/sjcl && ./configure --without-all --with-ecc --with-convenience --with-codecBytes --with-codecHex --compress=none && make sjcl.js",
     "lint": "eslint --cache --cache-location ../../node_modules/.cache/eslint",
     "lint:all": "yarn lint 'src/**/*.{ts,tsx}' 'test/**/*.{ts,tsx}'",
     "precommit": "echo lint-staged runs from root",
@@ -38,20 +31,8 @@
     "upkeep": "cd ../.. && yarn upkeep"
   },
   "dependencies": {
-    "asn1-parser": "^1.1.8",
-    "atob": "^2.1.2",
-    "btoa": "^1.2.1",
-    "elliptic": "^6.5.2",
-    "keccak": "^3.0.0",
-    "node-fetch": "^2.6.0",
-    "sjcl": "bitwiseshiftleft/sjcl"
-  },
-  "devDependencies": {
-    "@types/atob": "^2.1.2",
-    "@types/btoa": "^1.2.3",
-    "@types/elliptic": "^6.4.12",
-    "@types/keccak": "^3.0.1",
-    "@types/node-fetch": "^2.5.7",
-    "@types/sjcl": "^1.0.29"
+    "@coil/privacypass-sjcl": "0.0.0",
+    "@types/bn.js": "^4.11.6",
+    "bn.js": "^5.1.1"
   }
 }

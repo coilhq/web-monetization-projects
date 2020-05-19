@@ -27,11 +27,11 @@
       "@webexts/build-utils": [
         "packages/webexts-build-utils/src"
       ],
-      "@coil/anonymous-tokens": [
-        "packages/coil-anonymous-tokens/src"
-      ],
       "@coil/client": [
         "packages/coil-client/src"
+      ],
+      "@coil/privacypass-elliptic": [
+        "packages/coil-privacypass-elliptic/src"
       ],
       "@dier-makr/inversify": [
         "packages/dier-makr-inversify/src"
@@ -53,6 +53,9 @@
       ],
       "@web-monetization/wext/content": [
         "packages/web-monetization-wext/src/content"
+      ],
+      "@coil/anonymous-tokens": [
+        "packages/coil-anonymous-tokens/src"
       ],
       "@coil/puppeteer-utils": [
         "packages/coil-puppeteer-utils/src"

@@ -24,10 +24,10 @@
       "path": "packages/webexts-build-utils/tsconfig.build.json"
     },
     {
-      "path": "packages/coil-anonymous-tokens/tsconfig.build.json"
+      "path": "packages/coil-client/tsconfig.build.json"
     },
     {
-      "path": "packages/coil-client/tsconfig.build.json"
+      "path": "packages/coil-privacypass-elliptic/tsconfig.build.json"
     },
     {
       "path": "packages/dier-makr-inversify/tsconfig.build.json"
@@ -37,6 +37,9 @@
     },
     {
       "path": "packages/web-monetization-wext/tsconfig.build.json"
+    },
+    {
+      "path": "packages/coil-anonymous-tokens/tsconfig.build.json"
     },
     {
       "path": "packages/coil-puppeteer-utils/tsconfig.build.json"

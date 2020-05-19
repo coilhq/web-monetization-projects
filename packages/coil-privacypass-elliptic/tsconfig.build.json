@@ -13,9 +13,6 @@
   "references": [
     {
       "path": "../coil-privacypass-sjcl/tsconfig.build.json"
-    },
-    {
-      "path": "../coil-privacypass-elliptic/tsconfig.build.json"
     }
   ]
 }
