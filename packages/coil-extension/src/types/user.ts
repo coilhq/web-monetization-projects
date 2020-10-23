@@ -3,6 +3,7 @@ export interface User {
   fullName: string
   customerId?: string
   canTip?: boolean
+  paymentPointer?: string
   subscription?: {
     active: boolean
     endDate?: string

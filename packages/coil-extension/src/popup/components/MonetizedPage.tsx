@@ -46,6 +46,9 @@ export function MonetizedPage(props: PopupProps) {
     )
   }, [])
   const context = props.context
+  const disabled = Object.values(props.context.store.disabling ?? {}).some(
+    Boolean
+  )
   return (
     <>
       <Grid container alignItems='center' justify='center'>
@@ -55,10 +58,12 @@ export function MonetizedPage(props: PopupProps) {
               context={context}
               limitRefreshDate={limitRefreshDate}
             />
-          ) : (
+          ) : !disabled ? (
             <div onClick={onClick}>
               <Donating context={context} />
             </div>
+          ) : (
+            <Disabled context={context}></Disabled>
           )}
         </div>
       </Grid>
@@ -71,12 +76,16 @@ export function MonetizedPage(props: PopupProps) {
 }
 
 function Donating(props: PopupProps) {
-  const { monetizedTotal, adapted } = props.context.store
+  const { monetizedTotal, adapted, playState } = props.context.store
   const paymentStarted = monetizedTotal !== 0
   const emptyWhenNotAdapted = adapted ? 'Coil is paying the creator.' : ''
-  const payingOrSettingUpPayment = paymentStarted
-    ? emptyWhenNotAdapted
-    : 'Setting up payment.'
+  const payingOrSettingUpPayment =
+    // eslint-disable-next-line no-nested-ternary
+    playState === 'paused'
+      ? ''
+      : paymentStarted
+      ? emptyWhenNotAdapted
+      : 'Setting up payment.'
 
   return (
     <Fragment>
@@ -90,6 +99,39 @@ function Donating(props: PopupProps) {
         <MonetizeAnimation context={props.context} />
       </FlexBox>
     </Fragment>
+  )
+}
+
+function Disabled(props: PopupProps) {
+  const toggles = []
+  const disabling = props.context.store.disabling
+  if (disabling.disableUrl) {
+    toggles.push('page')
+  }
+  if (disabling.disableDomain) {
+    toggles.push('site')
+  }
+  if (disabling.disablePaymentPointer) {
+    toggles.push('payment pointer')
+  }
+  const reason = 'disabled for this ' + toggles.join(', ')
+  return (
+    <div style={{ height: '160px' }}>
+      <StatusTypography variant='h6' align='center'>
+        Coil isn&apos;t paying
+      </StatusTypography>
+      <StatusTypography variant='subtitle1' align='center'>
+        {reason}
+      </StatusTypography>
+      <FlexBox>
+        <img
+          src={'/res/stream_inactive.svg'}
+          alt='animation'
+          width='171'
+          height='22'
+        />
+      </FlexBox>
+    </div>
   )
 }
 

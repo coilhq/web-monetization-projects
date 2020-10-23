@@ -58,6 +58,11 @@ export class TabStates {
     const state: TabState = {
       playState: 'playing',
       stickyState: 'auto',
+      disabling: {
+        disableDomain: false,
+        disablePaymentPointer: false,
+        disableUrl: false
+      },
       frameStates: {
         [0]: this.makeFrameStateDefault()
       }
@@ -65,9 +70,12 @@ export class TabStates {
     return state
   }
 
-  private makeFrameStateDefault() {
+  private makeFrameStateDefault(): FrameState {
     return {
       monetized: false,
+      monetizationDetails: null,
+      disabled: false,
+      interactive: false,
       adapted: false,
       total: 0,
       lastMonetization: {
@@ -106,7 +114,14 @@ export class TabStates {
 
       case 'monetized':
         this.set(tab, {
-          icon: { path: this.icons.getActive() }
+          icon: { path: this.icons.getActive() },
+          badge: { text: '' }
+        })
+        break
+
+      case 'disabled':
+        this.set(tab, {
+          badge: { text: '🚫', color: Colors.BlackDisabledBackground }
         })
         break
 

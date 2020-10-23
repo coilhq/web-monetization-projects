@@ -71,6 +71,7 @@ let config = {
         '@typescript-eslint/explicit-function-return-type': 'off',
         '@typescript-eslint/no-parameter-properties': 'off',
         // There are ways around this so ...
+        '@typescript-eslint/explicit-module-boundary-types': 'off',
         '@typescript-eslint/no-non-null-assertion': 'error',
         '@typescript-eslint/promise-function-async': 'warn',
         '@typescript-eslint/no-unused-vars': 'warn',

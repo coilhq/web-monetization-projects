@@ -5,7 +5,7 @@ import { formatAmount } from '../util/currencyFormatting'
 import { Colors } from '../shared-theme/colors'
 
 import { PageTimeBar } from './pageTimeBar'
-import { PageTotal } from './options'
+import { PageTotal } from './interfaces'
 
 // styles for responsiveness
 const useStyles = makeStyles(theme => {

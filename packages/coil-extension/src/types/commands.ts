@@ -7,6 +7,7 @@ import {
   ToggleControlsAction
 } from './streamControls'
 import { FrameSpec } from './FrameSpec'
+import { DisablingControls } from './disabling'
 
 /**
  * browser.runtime.sendMessage
@@ -32,6 +33,15 @@ export interface SetStreamControls extends Command {
     play: PlayOrPauseState
     action: ToggleControlsAction
   }
+}
+
+/**
+ * popup -> background
+ * browser.runtime.sendMessage
+ */
+export interface SetDisabling extends Command {
+  command: 'setDisabling'
+  data: DisablingControls
 }
 
 /**
@@ -174,6 +184,7 @@ export type ToBackgroundMessage =
   | ResumeWebMonetization
   | StopWebMonetization
   | SetStreamControls
+  | SetDisabling
   | LogCommand
   | Logout
   | AdaptedSite
@@ -196,6 +207,7 @@ export type IconState =
   | 'inactive'
   | 'monetized'
   | 'streaming'
+  | 'disabled'
 
 export interface AdaptedSite {
   command: 'adaptedSite'

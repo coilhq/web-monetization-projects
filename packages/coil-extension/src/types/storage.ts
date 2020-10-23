@@ -1,5 +1,6 @@
 import { User } from './user'
 import { PlayOrPauseState, StickyState } from './streamControls'
+import { DisablingControls } from './disabling'
 
 export const STORAGE_KEY = {
   // BACKGROUND/POPUP
@@ -28,6 +29,12 @@ export interface LocalStorageProxy {
    * JSON serialized {@link User}
    */
   user?: User | null
+
+  /**
+   * JSON serialized {@link DisablingControls}
+   */
+  disabling?: DisablingControls | null
+
   /**
    * Boolean
    */
