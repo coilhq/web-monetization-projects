@@ -50,11 +50,12 @@ export const MonetizeAnimation = (props: PopupProps) => {
     }
   }, [])
 
+  const isPaused = props.context.store.playState === 'paused'
   const hasMonetized = props.context.store.monetizedTotal > 0
   // eslint-disable-next-line no-nested-ternary
   const src = animated
     ? '/res/stream_loop.svg'
-    : hasMonetized
+    : hasMonetized || isPaused
     ? '/res/stream_still.svg'
     : '/res/stream_connect_2.svg'
 

@@ -12,6 +12,7 @@ import {
 } from '../../types/commands'
 import { FrameSpec, sameFrame } from '../../types/FrameSpec'
 import { timeout } from '../../content/util/timeout'
+import { notNullOrUndef } from '../../util/nullables'
 
 import { logger, Logger } from './utils'
 
@@ -110,7 +111,7 @@ export class BackgroundFramesService extends EventEmitter {
     @logger('BackgroundFramesService')
     private log: Logger,
     @inject(tokens.WextApi)
-    private api: typeof window.chrome
+    private api = chrome
   ) {
     super()
   }
@@ -120,6 +121,13 @@ export class BackgroundFramesService extends EventEmitter {
     return frames.find(f => {
       return f.frameId == frame.frameId
     })
+  }
+
+  getFrameNotNull(frame: FrameSpec): Readonly<Frame> {
+    return notNullOrUndef(
+      this.getFrame(frame),
+      `getFrame(${JSON.stringify(frame)})`
+    )
   }
 
   async getFrameAsync(

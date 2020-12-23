@@ -39,7 +39,9 @@ export const TipButton = (props: PopupProps) => {
     }) as Promise<SendTipResult>
   }
 
-  if (props.context.store.user.canTip) {
+  const disabled = Object.values(props.context.store.disabling).some(Boolean)
+
+  if (props.context.store.user.canTip && !disabled) {
     switch (tipState) {
       case TipState.READY:
         return (

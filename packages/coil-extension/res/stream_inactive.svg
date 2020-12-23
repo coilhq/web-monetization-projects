@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+     viewBox="0 0 172 22" shape-rendering="geometricPrecision" text-rendering="geometricPrecision">
+  <circle r="2" transform="matrix(1 0 0 1 36 11)" fill="rgb(234,234,234)" stroke="none"
+          stroke-width="1"/>
+  <circle r="2" transform="matrix(1 0 0 1 61 11)" fill="rgb(234,234,234)" stroke="none"
+          stroke-width="1"/>
+  <circle r="2" transform="matrix(1 0 0 1 86 11)" fill="rgb(234,234,234)" stroke="none"
+          stroke-width="1"/>
+  <circle r="2" transform="matrix(1 0 0 1 111 11)" fill="rgb(234,234,234)" stroke="none"
+          stroke-width="1"/>
+  <circle r="2" transform="matrix(1 0 0 1 136 11)" fill="rgb(234,234,234)" stroke="none"
+          stroke-width="1"/>
+  <circle r="2" transform="matrix(1 0 0 1 161 11)" fill="rgb(234,234,234)" stroke="none"
+          stroke-width="1"/>
+
+  <circle r="2" transform="matrix(1 0 0 1 11 11)" fill="rgb(234,234,234)" stroke="none"
+          stroke-width="1"/>
+</svg>

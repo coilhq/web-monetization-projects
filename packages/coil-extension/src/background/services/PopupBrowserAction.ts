@@ -80,7 +80,7 @@ export class PopupBrowserAction {
 
   setBrowserAction(tabId: number, state: TabState) {
     // In some strange cases on android these are not set
-    const api = this.api
+    const api = chrome // this.api
 
     if (api.browserAction.setIcon) {
       const args = {
