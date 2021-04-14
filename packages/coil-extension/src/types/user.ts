@@ -21,4 +21,5 @@ export interface User {
     remainingDailyAmount: number
     hotkeyTipAmounts: Array<number>
   }
+  inTippingBeta?: boolean
 }

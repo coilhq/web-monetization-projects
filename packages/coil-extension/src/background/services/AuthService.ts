@@ -185,6 +185,9 @@ export class AuthService extends EventEmitter {
       this.store.user = {
         ...resp.data.whoami
       }
+      // const featureFlagResp = await this.client.featureEnabled(token, 'tipping-beta');
+      //todo: should probably return the users feature flag in whoami
+      this.store.user = { ...this.store.user, inTippingBeta: true }
       this.setTipSettings()
       return token
     } else {
@@ -196,6 +199,9 @@ export class AuthService extends EventEmitter {
     const resp = await this.client.queryToken(token)
     if (resp.data?.refreshToken?.token && resp.data?.whoami) {
       this.store.user = resp.data.whoami
+      // const featureFlagResp = await this.client.featureEnabled(token, 'tipping-beta');
+      //todo: should probably return the users feature flag in whoami
+      this.store.user = { ...this.store.user, inTippingBeta: true }
       this.setTipSettings()
       return resp.data.refreshToken.token
     } else {
@@ -203,10 +209,10 @@ export class AuthService extends EventEmitter {
     }
   }
 
-  setTipSettings() {
+  private setTipSettings() {
     if (this.store.user) {
-      // todo: this seems like the wrong place for this method, maybe move to it's own service?
       // todo: need to query api for users tip settings
+      // todo: cairin added it to the whoami response. Keeping this for now for placeholder values
       //* placeholder values */
       const placeholderTipSettings = {
         tipCreditBalance: 0,
