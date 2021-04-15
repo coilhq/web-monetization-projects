@@ -8,6 +8,7 @@ import { CoilDiscoverView } from './CoilDiscoverView'
 import { CoilPopupView } from './CoilPopupView'
 import { MonetizedRouter } from './MonetizedRouter'
 import { UnmonetizedPageView } from './UnmonetizedPageView'
+import { TipRouter } from './TipRouter'
 
 export function ViewRouter(): React.ReactElement {
   const { validToken, user, monetized, coilSite } = useStore()
@@ -43,7 +44,13 @@ export function ViewRouter(): React.ReactElement {
 
   // Monetized views
   if (monetized) {
-    return <MonetizedRouter /> // handles the monetized views based on local state
+    const showNewTipUi = user.canTip
+    // const showNewTipUi = false
+    if (showNewTipUi) {
+      return <TipRouter /> // handles the tip views based on local state
+    } else {
+      return <MonetizedRouter /> // handles the monetized views based on local state
+    }
   } else {
     // Non Monetized Page
     return <UnmonetizedPageView />

@@ -42,7 +42,13 @@ const tipUser = {
   customerId: 'cus_EmQtvoQVyJgZ75',
   subscription: { active: true },
   invitation: { usedAt: '2018-09-22T00:28:32.714Z' },
-  currencyPreferences: { code: 'USD', scale: 9 }
+  currencyPreferences: { code: 'USD', scale: 9 },
+  tipSettings: {
+    tipCreditBalance: 10,
+    minimumTipLimit: 1,
+    remainingDailyAmount: 100,
+    hotkeyTipAmounts: [5, 10, 50]
+  }
 }
 
 function mockState(partial: Partial<PopupStateType>): PopupStateType {

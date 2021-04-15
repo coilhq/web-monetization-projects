@@ -34,7 +34,7 @@ export const TipButton = () => {
   }
 
   const sendTip = async () => {
-    const message: SendTip = { command: 'sendTip' }
+    const message: SendTip = { command: 'sendTip', data: { amount: 1 } }
     return new Promise(resolve => {
       popupHost.runtime.sendMessage(message, (result: SendTipResult) => {
         resolve(result)

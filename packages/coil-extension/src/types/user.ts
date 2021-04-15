@@ -15,4 +15,10 @@ export interface User {
     code: string
     scale: number
   }
+  tipSettings?: {
+    tipCreditBalance: number
+    minimumTipLimit: number
+    remainingDailyAmount: number
+    hotkeyTipAmounts: Array<number>
+  }
 }

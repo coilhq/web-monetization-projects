@@ -422,7 +422,7 @@ export class BackgroundScript {
         sendResponse(await this.youtube.fetchChannelId(request.data.youtubeUrl))
         break
       case 'sendTip':
-        sendResponse(await this.sendTip())
+        sendResponse(await this.sendTip(request.data.amount))
         break
       case 'checkIFrameIsAllowedFromIFrameContentScript':
         sendResponse(
@@ -754,7 +754,7 @@ export class BackgroundScript {
     return true
   }
 
-  private async sendTip(): Promise<{ success: boolean }> {
+  private async sendTip(tip: number): Promise<{ success: boolean }> {
     const tabId = this.activeTab
     const streamId = this.assoc.getStreamId({ tabId, frameId: 0 })
     if (!streamId) {
@@ -776,7 +776,8 @@ export class BackgroundScript {
 
     const receiver = stream.getPaymentPointer()
     const { assetCode, assetScale, exchangeRate } = stream.getAssetDetails()
-    const amount = Math.floor(1e9 * exchangeRate).toString() // 1 USD, assetScale = 9
+    const tipAmount = tip < 1 ? 1 : tip
+    const amount = Math.floor(tipAmount * 1e9 * exchangeRate).toString() // 1 USD, assetScale = 9
 
     try {
       this.log(`sendTip: sending tip to ${receiver}`)
