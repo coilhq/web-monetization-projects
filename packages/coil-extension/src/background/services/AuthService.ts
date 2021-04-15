@@ -185,6 +185,7 @@ export class AuthService extends EventEmitter {
       this.store.user = {
         ...resp.data.whoami
       }
+      this.setTipSettings()
       return token
     } else {
       return null
@@ -195,9 +196,28 @@ export class AuthService extends EventEmitter {
     const resp = await this.client.queryToken(token)
     if (resp.data?.refreshToken?.token && resp.data?.whoami) {
       this.store.user = resp.data.whoami
+      this.setTipSettings()
       return resp.data.refreshToken.token
     } else {
       return null
+    }
+  }
+
+  setTipSettings() {
+    if (this.store.user) {
+      // todo: this seems like the wrong place for this method, maybe move to it's own service?
+      // todo: need to query api for users tip settings
+      //* placeholder values */
+      const placeholderTipSettings = {
+        tipCreditBalance: 0,
+        minimumTipLimit: 1,
+        remainingDailyAmount: 400,
+        hotkeyTipAmounts: [5, 10, 50]
+      }
+      this.store.user = {
+        ...this.store.user,
+        tipSettings: placeholderTipSettings
+      }
     }
   }
 
