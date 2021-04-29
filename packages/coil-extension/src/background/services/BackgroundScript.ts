@@ -781,18 +781,9 @@ export class BackgroundScript {
 
     try {
       this.log(`sendTip: sending tip to ${receiver}`)
-      const result = await this.client.query({
-        query: `
-          mutation sendTip($receiver: String!) {
-            sendTip(receiver: $receiver) {
-              success
-            }
-          }
-        `,
-        token,
-        variables: {
-          receiver
-        }
+      const result = await this.client.initiateTip({
+        amount,
+        destination: receiver
       })
       this.log(`sendTip: sent tip to ${receiver}`, result)
       const message: TipSent = {
