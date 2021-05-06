@@ -44,8 +44,7 @@ export function ViewRouter(): React.ReactElement {
 
   // Monetized views
   if (monetized) {
-    const showNewTipUi = user.inTippingBeta
-    // const showNewTipUi = false
+    const showNewTipUi = user?.tipSettings?.inTippingBeta
     if (showNewTipUi) {
       return <TipRouter /> // handles the tip views based on local state
     } else {

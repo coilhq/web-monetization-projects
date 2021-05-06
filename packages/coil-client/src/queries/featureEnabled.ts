@@ -4,7 +4,7 @@ export interface FeatureEnabledData {
   featureEnabled: boolean
 }
 
-export const featureEnabledQuery = `{
+export const featureEnabledQuery = `query getFeatureFlag($key: String!){
   featureEnabled(key: $key)
 }`
 

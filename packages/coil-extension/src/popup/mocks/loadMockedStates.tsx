@@ -44,6 +44,7 @@ const tipUser = {
   invitation: { usedAt: '2018-09-22T00:28:32.714Z' },
   currencyPreferences: { code: 'USD', scale: 9 },
   tipSettings: {
+    inTippingBeta: true,
     tipCreditBalance: 10,
     minimumTipLimit: 1,
     remainingDailyAmount: 100,

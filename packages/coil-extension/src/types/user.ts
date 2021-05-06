@@ -15,11 +15,18 @@ export interface User {
     code: string
     scale: number
   }
+  tipCredit?: {
+    balanceCents: number
+  }
+  tipping?: {
+    limitRemaining: string
+  }
+  minimumTipLimit?: number
   tipSettings?: {
+    inTippingBeta?: boolean
     tipCreditBalance: number
     minimumTipLimit: number
     remainingDailyAmount: number
     hotkeyTipAmounts: Array<number>
   }
-  inTippingBeta?: boolean
 }

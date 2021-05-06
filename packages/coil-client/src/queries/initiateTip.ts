@@ -1,6 +1,6 @@
 import { GraphQlClient } from '../graphQlClient'
 
-export const initiateTipQuery = `query initiateTip($input: InitiateTipInput!) {
+export const initiateTipQuery = `mutation initiateTip($input: InitiateTipInput!) {
   initiateTip(input: $input) {
     code
     message
@@ -44,10 +44,12 @@ export interface InitiateTipInput {
 
 export async function initiateTip(
   this: GraphQlClient,
+  token: string,
   input: InitiateTipInput
 ): Promise<InitiateTipData['initiateTip']> {
   const message = await this.query<InitiateTipData>({
     query: initiateTipQuery,
+    token,
     variables: { input }
   })
 
