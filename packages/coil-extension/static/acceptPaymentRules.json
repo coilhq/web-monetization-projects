@@ -1,0 +1,13 @@
+[
+  {
+    "id": 1,
+    "priority": 1,
+    "action": {
+      "type": "modifyHeaders",
+      "requestHeaders": [
+        { "header": "accept-payment", "operation": "set", "value": "webmon/*;q=0.8" }
+      ]
+    },
+    "condition": { "resourceTypes": ["main_frame"] }
+  }
+]

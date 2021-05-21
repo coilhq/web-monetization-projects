@@ -23,6 +23,13 @@
   "web_accessible_resources": [
 
   ],
+  "declarative_net_request": {
+    "rule_resources": [{
+      "id": "ruleset_1_accept_payment",
+      "enabled": true,
+      "path": "static/acceptPaymentRules.json"
+    }]
+  },
   "content_scripts": [
     {
       "matches": ["https://*/*","http://*/*"],
@@ -32,5 +39,5 @@
       "run_at": "document_start"
     }
   ],
-  "permissions": [ "webNavigation", "<all_urls>" ]
+  "permissions": [ "webNavigation", "declarativeNetRequest", "<all_urls>" ]
 }
