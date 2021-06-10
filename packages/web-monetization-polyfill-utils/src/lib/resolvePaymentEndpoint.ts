@@ -1,9 +1,21 @@
-export function resolvePaymentEndpoint(pointerOrUrl: string) {
-  const httpUrl = pointerOrUrl.replace(/^\$/, 'https://')
+export function resolvePaymentEndpoint(
+  pointerOrUrl: string,
+  forLinkTag = false
+) {
+  const httpUrl = !forLinkTag
+    ? pointerOrUrl.replace(/^\$/, 'https://')
+    : pointerOrUrl
 
   let url: URL
   try {
     url = new URL(httpUrl)
+    if (!url.protocol.match(/https?:/)) {
+      // noinspection ExceptionCaughtLocallyJS
+      throw new Error(
+        'SPSP endpoint must be specified as either a ' +
+          'payment pointer or fully resolved https:// url '
+      )
+    }
   } catch (e) {
     throw new Error(
       `Invalid payment pointer/url: ${JSON.stringify(pointerOrUrl)}`
