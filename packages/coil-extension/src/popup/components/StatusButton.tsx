@@ -1,7 +1,6 @@
 import React from 'react'
 import { Button, styled } from '@material-ui/core'
 import { ButtonProps } from '@material-ui/core/Button'
-import { Colors } from '../../shared-theme/colors'
 
 import { Colors } from '../../shared-theme/colors'
 
@@ -16,7 +15,7 @@ const ButtonWithMargin = styled(Button as ButtonType)({
   color: Colors.White,
   '&:hover': {
     backgroundColor: '#000000',
-    color: Colors.White
+    color: Colors.White,
     boxShadow: 'none'
   }
 })

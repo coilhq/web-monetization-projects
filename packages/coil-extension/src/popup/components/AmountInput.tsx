@@ -73,9 +73,8 @@ export const AmountInput = (props: IAmountInput): React.ReactElement => {
   const defaultFontSize = 64
   const characterSpacing = 0.6
   const maxAmountWidth = 160
-  const [displayFontSize, setDisplayFontSize] = useState<number>(
-    defaultFontSize
-  )
+  const [displayFontSize, setDisplayFontSize] =
+    useState<number>(defaultFontSize)
   const [isUserInput, setIsUserInput] = useState<boolean>(false)
   const inputRef = useRef<HTMLInputElement>(null)
 
