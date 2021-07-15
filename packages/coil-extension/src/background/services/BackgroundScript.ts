@@ -13,7 +13,6 @@ import {
   ClosePopup,
   ContentScriptInit,
   MonetizationProgress,
-  MonetizationStart,
   OnFrameAllowedChanged,
   PauseWebMonetization,
   ReportCorrelationIdFromIFrameContentScript,
@@ -31,7 +30,7 @@ import { getFrameSpec, getTab } from '../../util/tabs'
 import { FrameSpec } from '../../types/FrameSpec'
 import { BuildConfig } from '../../types/BuildConfig'
 
-import { StreamMoneyEvent } from './Stream'
+import { Stream, StreamMoneyEvent } from './Stream'
 import { AuthService } from './AuthService'
 import { TabStates } from './TabStates'
 import { Streams } from './Streams'
@@ -290,17 +289,6 @@ export class BackgroundScript {
     this.streams.on('money', (details: StreamMoneyEvent) => {
       const frame = this.assoc.getFrame(details.requestId)
       const { tabId, frameId } = frame
-      if (details.packetNumber === 0) {
-        const message: MonetizationStart = {
-          command: 'monetizationStart',
-          data: {
-            paymentPointer: details.paymentPointer,
-            requestId: details.requestId
-          }
-        }
-        this.api.tabs.sendMessage(tabId, message, { frameId })
-      }
-
       const message: MonetizationProgress = {
         command: 'monetizationProgress',
         data: {
@@ -484,11 +472,13 @@ export class BackgroundScript {
   ) {
     const tabState = this.tabStates.get(tabId)
 
+    const isPaying = this.isStreamPaying({ tabId, frameId })
     this.tabStates.setFrame(
       { tabId, frameId },
       {
         monetized: true,
-        total: total || (tabState.frameStates[frameId]?.total ?? 0)
+        total: total || (tabState.frameStates[frameId]?.total ?? 0),
+        isPaying
       }
     )
 
@@ -568,7 +558,9 @@ export class BackgroundScript {
 
     if (state) {
       const total = frameStates.reduce((acc, val) => acc + val.total, 0)
+      const isPaying = frameStates.some(state => state.isPaying)
       this.storage.set('monetizedTotal', total)
+      this.storage.set('isPaying', isPaying)
     }
   }
 
@@ -803,7 +795,14 @@ export class BackgroundScript {
     const id = this.assoc.getStreamId(frame)
     if (id) {
       this.log('resuming stream', id)
+      // Always set "pending" transition state and emit event
+      // We do this just for consistency/back-compat sake
       this.sendSetMonetizationStateMessage(frame, 'pending')
+      // Don't wait for a payment if the stream has already paid out as it could
+      // be many minutes
+      if (this.hasStreamPaid(frame)) {
+        this.sendSetMonetizationStateMessage(frame, 'started')
+      }
       this.streams.resumeStream(id)
     }
     return true
@@ -883,6 +882,7 @@ export class BackgroundScript {
         }
 
         this.log('closing stream with id', streamId)
+        this.activeTabLogger.sendLogEvent(() => `closing stream: ${streamId}`)
         this.streams.closeStream(streamId)
         this.assoc.clearFrame(streamId)
         closed++
@@ -995,5 +995,21 @@ export class BackgroundScript {
         }
       })
     }
+  }
+
+  private isStreamPaying(frame: FrameSpec): boolean {
+    return this.getStream(frame)?.isPaying() || false
+  }
+
+  private hasStreamPaid(frame: FrameSpec): boolean {
+    return this.getStream(frame)?.hasPaidAny() || false
+  }
+
+  private getStream(frame: FrameSpec): Stream | null {
+    const streamId = this.assoc.getStreamId(frame)
+    if (!streamId) {
+      this.log('can not find top frame for tabId=%d', frame.tabId)
+    }
+    return streamId ? this.streams.getStream(streamId) : null
   }
 }

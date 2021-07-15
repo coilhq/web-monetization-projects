@@ -1498,6 +1498,7 @@ __metadata:
     "@coil/client": ^0.0.0
     "@coil/polyfill-utils": ^0.0.0
     "@coil/puppeteer-utils": ^0.0.0
+    "@coil/webpack-utils": 0.0.0
     "@commitlint/cli": 12.1.4
     "@commitlint/config-conventional": 12.1.4
     "@dier-makr/annotations": ^0.0.0

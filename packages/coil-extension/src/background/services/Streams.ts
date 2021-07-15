@@ -2,20 +2,17 @@ import { EventEmitter } from 'events'
 
 import { PaymentDetails } from '@webmonetization/polyfill-utils'
 import { Container, injectable } from 'inversify'
-import { BandwidthTiers } from '@coil/polyfill-utils'
 
 import * as tokens from '../../types/tokens'
 
 import { Stream } from './Stream'
+import { ActiveTabLogger } from './ActiveTabLogger'
 
 @injectable()
 export class Streams extends EventEmitter {
   private readonly _streams: { [id: string]: Stream }
 
-  constructor(
-    private container: Container,
-    private readonly _tiers: BandwidthTiers
-  ) {
+  constructor(private container: Container) {
     super()
     this._streams = {}
   }
@@ -59,7 +56,11 @@ export class Streams extends EventEmitter {
 
   closeStream(id: string) {
     if (this._streams[id]) {
-      void this._streams[id].stop()
+      this._streams[id].stop().then(() => {
+        this.container
+          .get(ActiveTabLogger)
+          .sendLogEvent(() => `Streams:closeStream:${id.slice(0, 6)}`)
+      })
       this._streams[id].removeAllListeners()
       delete this._streams[id]
     }

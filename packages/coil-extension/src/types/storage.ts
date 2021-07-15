@@ -36,6 +36,8 @@ export interface LocalStorageProxy {
   monetized?: boolean | null
   coilSite?: string | null
 
+  isPaying?: boolean | null
+
   stickyState?: StickyState | null
   playState?: PlayOrPauseState | null
 

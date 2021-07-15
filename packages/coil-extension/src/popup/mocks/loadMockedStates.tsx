@@ -11,7 +11,6 @@ import { API } from '../../webpackDefines'
 import { StorageService } from '../../services/storage'
 import { User } from '../../types/user'
 import { defaultPopupHost } from '../context/popupHostContext'
-import { StorageEventPartial } from '../context/storeContext'
 import { Index } from '../Index'
 
 import { StatePanel } from './StatePanel'
@@ -54,7 +53,8 @@ function mockState(partial: Partial<PopupStateType>): PopupStateType {
     stickyState: null,
     playState: null,
     monetizedTotal: null,
-    coilSite: null
+    coilSite: null,
+    isPaying: null
   }
   return { ...ret, ...partial }
 }
@@ -68,6 +68,7 @@ const notSupported = mockState({
 
 const payingCoilArticle = mockState({
   monetized: true,
+  isPaying: true,
   coilSite: 'https://coil.com/p/mirrae/Letter-to-my-Daughter/-ZInTJqN-',
   monetizedTotal: 10854,
   user: user,
@@ -93,6 +94,7 @@ const startDiscovering = mockState({
 })
 
 const payingYouTube = mockState({
+  isPaying: true,
   monetized: true,
   monetizedTotal: 2326667,
   playState: 'playing',
@@ -103,6 +105,7 @@ const payingYouTube = mockState({
 })
 
 const payingTwitch = mockState({
+  isPaying: true,
   monetized: true,
   monetizedTotal: 5910000,
   playState: 'playing',
@@ -113,6 +116,7 @@ const payingTwitch = mockState({
 })
 
 const payingNonCoilSite = mockState({
+  isPaying: true,
   monetized: true,
   monetizedTotal: 22817800,
   user: user,
@@ -270,26 +274,11 @@ export const mockPopupsPage = () => {
       MOCK_STATES[0].state
     )
     const [selected, setSelected] = useState(0)
-    const [initiated, setInitiated] = useState(false)
 
     const popups = MOCK_STATES.map(({ name, state }, i) => {
       const storage = makeStorage(state)
       const key = `${i}-${name}`
       const mockHost = mockHosts[i]
-      if (name.search(/paying/i) != -1 && !initiated) {
-        let value = 10
-        setInterval(() => {
-          const newValue = (value += 10)
-          state.monetizedTotal = newValue
-
-          const message: StorageEventPartial = {
-            key: 'monetizedTotal',
-            newValue: JSON.stringify(newValue)
-          }
-          mockHost.events.emit('storage', message)
-        }, 1500)
-        setInitiated(true)
-      }
 
       return (
         <Grid

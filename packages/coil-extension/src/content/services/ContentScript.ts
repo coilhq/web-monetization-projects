@@ -25,6 +25,7 @@ import {
 import { ContentRuntime } from '../types/ContentRunTime'
 import { debug } from '../util/logging'
 import { addCoilExtensionInstalledMarker } from '../util/addCoilExtensionMarker'
+import { debounce } from '../../util/debounce'
 
 import { Frames } from './Frames'
 import { AdaptedContentService } from './AdaptedContentService'
@@ -57,10 +58,10 @@ export class ContentScript {
   ) {}
 
   handleMonetizationTag() {
-    const startMonetization = async (details: PaymentDetails) => {
+    const startMonetization = debounce((details: PaymentDetails) => {
       this.monetization.setMonetizationRequest({ ...details })
-      await this.doStartMonetization()
-    }
+      void this.doStartMonetization()
+    }, 5 * 1e3)
 
     const stopMonetization = (details: PaymentDetails) => {
       const request: StopWebMonetization = {
@@ -84,7 +85,7 @@ export class ContentScript {
           stopMonetization(stopped)
         }
         if (started) {
-          void startMonetization(started)
+          startMonetization(started)
         }
       }
     )
@@ -136,6 +137,11 @@ export class ContentScript {
         } else if (request.command === 'setMonetizationState') {
           this.monetization.setState(request.data)
         } else if (request.command === 'monetizationProgress') {
+          if (this.monetization.getState() === 'pending') {
+            // Don't transition from stopped → started. This prevents catch-up
+            // payments from triggering 'start' while a tab is unfocused.
+            this.monetization.setState({ state: 'started' })
+          }
           const detail: MonetizationProgressEvent['detail'] = {
             amount: request.data.amount,
             assetCode: request.data.assetCode,
@@ -147,9 +153,8 @@ export class ContentScript {
           this.monetization.dispatchMonetizationProgressEvent(detail)
         } else if (request.command === 'monetizationStart') {
           debug('monetizationStart event')
-          this.monetization.dispatchMonetizationStartEventAndSetMonetizationState(
-            request.data
-          )
+          // Indicate that payment has started.
+          this.monetization.setState({ state: 'started' })
         } else if (request.command === 'checkIFrameIsAllowedFromBackground') {
           this.frames
             .checkIfIframeIsAllowedFromBackground(request.data.frame)

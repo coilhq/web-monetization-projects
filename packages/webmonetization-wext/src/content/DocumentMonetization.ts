@@ -96,9 +96,15 @@ export class DocumentMonetization {
           state
         })
       }
-      if (this.request && (state === 'stopped' || state === 'pending')) {
+      if (this.request) {
+        const mapping = {
+          pending: 'monetizationpending',
+          stopped: 'monetizationstop',
+          started: 'monetizationstart'
+        } as const
+
         this.dispatchMonetizationEvent(
-          state === 'pending' ? 'monetizationpending' : 'monetizationstop',
+          mapping[state],
           {
             paymentPointer: this.request.paymentPointer,
             requestId: this.request.requestId

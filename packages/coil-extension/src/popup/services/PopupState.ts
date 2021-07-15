@@ -5,6 +5,7 @@ export const STORAGE_KEYS = [
   'coilSite',
   'monetized',
   'monetizedTotal',
+  'isPaying',
   'stickyState',
   'playState',
   'user',

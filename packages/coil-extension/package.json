@@ -51,6 +51,7 @@
     "@coil/client": "^0.0.0",
     "@coil/polyfill-utils": "^0.0.0",
     "@coil/puppeteer-utils": "^0.0.0",
+    "@coil/webpack-utils": "0.0.0",
     "@dier-makr/annotations": "^0.0.0",
     "@dier-makr/inversify": "^0.0.0",
     "@material-ui/core": "^4.11.4",

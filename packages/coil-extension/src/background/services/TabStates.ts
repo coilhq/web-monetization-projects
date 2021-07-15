@@ -66,6 +66,7 @@ export class TabStates {
     return {
       monetized: false,
       adapted: false,
+      isPaying: false,
       total: 0,
       lastMonetization: {
         command: null,

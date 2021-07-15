@@ -5,6 +5,7 @@ export type MonetizationCommand = 'pause' | 'stop' | 'start' | 'resume'
 export interface FrameState {
   adapted: boolean
   monetized: boolean
+  isPaying: boolean
   // Tracks the total amount of `source` money sent (not was received)
   total: number
   lastMonetization: {

@@ -51,27 +51,17 @@ export class DocumentMonetization {
       if (changedState) {
         getDoc(this.doc).monetization.state = state
       }
-      if (this.request && (state === 'stopped' || state === 'pending')) {
-        this.dispatchMonetizationEvent(
-          state === 'pending' ? 'monetizationpending' : 'monetizationstop',
-          this.request,
-          finalized
-        )
+      if (this.request) {
+        const mapping = {
+          pending: 'monetizationpending',
+          stopped: 'monetizationstop',
+          started: 'monetizationstart'
+        } as const
+
+        this.dispatchMonetizationEvent(mapping[state], this.request, finalized)
       }
     }
     return changed
-  }
-
-  dispatchMonetizationStartEventAndSetMonetizationState(
-    detail: MonetizationStartEvent['detail']
-  ) {
-    // Indicate that payment has started.
-    const changed = this.setState({ state: 'started' })
-    if (!changed) {
-      throw new Error(`expecting state transition`)
-    }
-    // First nonzero packet has been fulfilled
-    this.dispatchMonetizationEvent('monetizationstart', detail)
   }
 
   private dispatchMonetizationEvent(

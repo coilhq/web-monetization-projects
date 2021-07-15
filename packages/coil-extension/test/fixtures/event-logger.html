@@ -5,7 +5,7 @@
     <meta
       id="money"
       name="monetization"
-      content="$twitter.xrptipbot.com/Coil"
+      content="$ilp.uphold.com/USD/4k6g3nNYR4qh"
     />
     <script>
       if (document.monetization) {
@@ -18,17 +18,44 @@
     <script src="/coil-oauth-wm.js"></script>
     <script>
       let lastTimestamp = Date.now()
+      let total = 0n
+      let pendingTime = null
+      let rate = 1 // delivered per sent
+      let throughput = 1
+
+      const start = lastTimestamp
+
       function log(msg) {
         const log = document.getElementById('log')
         if (log) {
           const newTimestamp = Date.now()
           const diff = newTimestamp - lastTimestamp
+          const diffFromStart = ((newTimestamp - start) / 1e3).toFixed(3)
           lastTimestamp = newTimestamp
-          log.innerText += msg + ' +' + diff + '\n'
+
+          const span = document.createElement('span')
+          span.innerText = `(+${diffFromStart}) ${msg} +${diff}`
+          log.appendChild(span)
+          log.appendChild(document.createElement('br'))
         }
       }
 
       const initialState = document.monetization && document.monetization.state
+      document.addEventListener('coil_log', evt => {
+        log('coil_log: ' + evt.detail.message)
+        if (evt.detail.extra.rate) {
+          rate = Number(evt.detail.extra.rate)
+          log(`coil_log: setting rate=${rate}`)
+        }
+        if (evt.detail.extra.throughput) {
+          throughput = Number(evt.detail.extra.throughput)
+          log(`coil_log: setting throughput=${throughput}`)
+        }
+        if (evt.detail.extra.firstMinuteStarted) {
+          pendingTime = Number(evt.detail.extra.firstMinuteStarted)
+          log(`coil_log: setting pendingTime=${pendingTime}`)
+        }
+      })
       window.addEventListener('load', () => {
         log('event: window.load, initial state: ' + initialState)
         log(
@@ -73,10 +100,23 @@
 
         if (document.monetization) {
           setInterval(() => {
-            log('state: ' + document.monetization.state)
+            // source units per second
+            const secondsSincePending = (Date.now() - pendingTime) / 1000
+            const expectedDelivered = secondsSincePending * (throughput * rate)
+            log(
+              `state: ${
+                document.monetization.state
+              } monetizedFor=${secondsSincePending} paid=${
+                total >= expectedDelivered
+              } actualDelivered=${total} expectedDelivered=${expectedDelivered} rate=${rate} invRate=${
+                1 / rate
+              }`
+            )
           }, 1e3)
 
           document.monetization.addEventListener('monetizationpending', ev => {
+            pendingTime = Date.now()
+            total = 0n
             log(
               'event: pending, state: ' +
                 document.monetization.state +
@@ -110,6 +150,7 @@
           })
 
           document.monetization.addEventListener('monetizationprogress', ev => {
+            total += BigInt(ev.detail.amount)
             log(
               'event: progress, state: ' +
                 document.monetization.state +

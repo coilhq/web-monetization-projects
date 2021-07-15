@@ -5,7 +5,6 @@ import {
   StreamControl,
   watchPageEvents
 } from '@webmonetization/polyfill-utils'
-import type { PackageVersion } from '@coil/webpack-utils'
 
 import { Stream } from './Stream'
 import { getDoc } from './documentExtensions'
@@ -21,8 +20,6 @@ export enum InitState {
   STARTED
 }
 
-declare const OAUTH_SCRIPTS_VERSION: PackageVersion
-
 export class MonetizationPolyfill {
   private btpToken!: string
   private btpEndpoint?: string
@@ -32,8 +29,6 @@ export class MonetizationPolyfill {
 
   private state: InitState = InitState.STOPPED
   private stream: Stream
-
-  static VERSION: PackageVersion = OAUTH_SCRIPTS_VERSION
 
   constructor(deps: Injector) {
     debug('MonetizationPolyfill constructor!')

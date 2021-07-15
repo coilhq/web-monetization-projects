@@ -1,3 +1,5 @@
+import type { PackageVersion } from '@coil/webpack-utils'
+
 declare const WEBPACK_DEFINE_API: any
 declare const WEBPACK_DEFINE_VERSION: any
 declare const WEBPACK_DEFINE_COIL_DOMAIN: any
@@ -19,4 +21,4 @@ export const API: typeof window.chrome = api!
 export const COIL_DOMAIN: string = WEBPACK_DEFINE_COIL_DOMAIN
 export const BTP_ENDPOINT: string | null = WEBPACK_DEFINE_BTP_ENDPOINT
 export const BUILD_CONFIG: Record<string, unknown> = WEBPACK_DEFINE_BUILD_CONFIG
-export const VERSION: string = WEBPACK_DEFINE_VERSION
+export const VERSION: PackageVersion = WEBPACK_DEFINE_VERSION

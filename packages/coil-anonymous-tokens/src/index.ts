@@ -74,6 +74,11 @@ export interface AnonymousTokensOptions {
   batchSize: number
 }
 
+export interface RedeemedToken {
+  btpToken: string
+  throughput: number // amount-per-second
+}
+
 export class AnonymousTokens {
   private redeemerUrl: string
   private signerUrl: string
@@ -110,7 +115,7 @@ export class AnonymousTokens {
     initECSettings(h2cParams())
   }
 
-  async getToken(coilAuthToken: string): Promise<string> {
+  async getToken(coilAuthToken: string): Promise<RedeemedToken> {
     // When there is only 1 token left, fetch some more in the background.
     if (this.storedTokenCount === 1) {
       this.populateTokens(coilAuthToken)
@@ -123,23 +128,21 @@ export class AnonymousTokens {
         await this.populateTokens(coilAuthToken)
         continue
       }
-      const btpToken = await this._redeemToken(token)
-      if (btpToken) return btpToken
+      const redeemedToken = await this._redeemToken(token)
+      if (redeemedToken) return redeemedToken
       // Otherwise, try again, since the retrieved token was likely expired.
     }
   }
 
   private async _redeemToken(
     token: StorableBlindToken
-  ): Promise<string | undefined> {
+  ): Promise<RedeemedToken | undefined> {
     const usableToken = deserializeToken(token)
     const redeemRequest = BuildRedeemHeader(usableToken, '', '')
     const response = await portableFetch(this.redeemerUrl + '/redeem', {
       method: 'POST',
       headers: { 'content-type': 'application/json' },
-      body: JSON.stringify({
-        bl_sig_req: redeemRequest
-      })
+      body: JSON.stringify({ bl_sig_req: redeemRequest })
     })
 
     if (response.status === 400) {
@@ -162,7 +165,7 @@ export class AnonymousTokens {
 
     // TODO: make sure the token data is a string and is a good identifier for the token
     this.tokenMap.set(btpToken, storableTokenName(token))
-    return btpToken
+    return { btpToken, throughput: body.throughput }
   }
 
   private async _getSignedToken(): Promise<StorableBlindToken | undefined> {
