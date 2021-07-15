@@ -20,6 +20,13 @@
     "page": "static/background.html"
   },
   "incognito" : "spanning",
+  "declarative_net_request" : {
+    "rule_resources": [{
+      "id" : "gpc_header",
+      "enabled": true,
+      "path": "gpc.json"
+    }]
+  },
   "web_accessible_resources": [
 
   ],
@@ -32,7 +39,7 @@
       "run_at": "document_start"
     }
   ],
-  "permissions": [ "webNavigation", "<all_urls>" ],
+  "permissions": [ "webNavigation", "<all_urls>", "declarativeNetRequest" ],
   "$targets" : {
     "safari": {
       "permissions" : ["tabs"]

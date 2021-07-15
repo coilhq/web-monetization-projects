@@ -77,6 +77,10 @@ export function makeWebpackConfig(rootDir: string): webpack.Configuration {
 
   const copyToDist = [
     {
+      from: 'gpc.json',
+      to: 'gpc.json'
+    },
+    {
       from: 'manifest.json',
       to: 'manifest.json',
       transform: (content: Buffer) => {
