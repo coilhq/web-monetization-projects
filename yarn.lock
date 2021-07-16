@@ -1558,6 +1558,8 @@ __metadata:
     react-dom: ^17.0.0
     reduct: ^3.3.1
     rimraf: 3.0.2
+    stacktrace-gps: ^3.0.4
+    stacktrace-js: ^2.0.2
     ts-jest: 27.0.3
     ts-loader: 9.2.3
     ts-node: 10.1.0
@@ -3883,6 +3885,61 @@ __metadata:
   checksum: c84773d7973edad5511a31d2cc75023447b5cf714a84de9bb50eda45dda88a0d3bd2c30bf6e6e936da50a048d5352e2151c694e13e59b97d187ba1f329e9a00c
   languageName: node
   linkType: hard
+
+"@stacktrace-js/stacktrace-js@workspace:packages/stacktrace-js-stacktrace-js":
+  version: 0.0.0-use.local
+  resolution: "@stacktrace-js/stacktrace-js@workspace:packages/stacktrace-js-stacktrace-js"
+  dependencies:
+    "@babel/core": 7.14.6
+    "@babel/plugin-proposal-class-properties": 7.14.5
+    "@babel/plugin-proposal-decorators": 7.14.5
+    "@babel/plugin-proposal-object-rest-spread": 7.14.7
+    "@babel/preset-env": 7.14.7
+    "@babel/preset-typescript": 7.14.5
+    "@commitlint/cli": 12.1.4
+    "@commitlint/config-conventional": 12.1.4
+    "@types/jest": 26.0.24
+    "@types/node": 14.17.5
+    "@typescript-eslint/eslint-plugin": 4.28.3
+    "@typescript-eslint/parser": 4.28.3
+    "@yarnpkg/pnpify": 2.4.0
+    JSON2016: 1.0.0
+    copy-webpack-plugin: 9.0.1
+    error-stack-parser: ^2.0.6
+    eslint: 7.30.0
+    eslint-config-prettier: 8.3.0
+    eslint-import-resolver-node: 0.3.4
+    eslint-plugin-import: 2.23.4
+    eslint-plugin-jest: 24.3.6
+    eslint-plugin-jsx-a11y: 6.4.1
+    eslint-plugin-node: 11.1.0
+    eslint-plugin-prettier: 3.4.0
+    eslint-plugin-promise: 5.1.0
+    eslint-plugin-react: 7.24.0
+    eslint-plugin-react-hooks: 4.2.0
+    eslint-plugin-standard: 5.0.0
+    husky: 7.0.1
+    jest: 27.0.6
+    lerna: 4.0.0
+    lint-staged: 11.0.1
+    prettier: 2.3.2
+    rimraf: 3.0.2
+    stack-generator: ^2.0.5
+    stackframe: ^1.2.0
+    stacktrace-gps: ^3.0.4
+    ts-jest: 27.0.3
+    ts-loader: 9.2.3
+    ts-node: 10.1.0
+    ts-node-dev: 1.1.8
+    tsconfig-paths: 3.10.1
+    typescript: 4.3.5
+    webpack: 5.44.0
+    webpack-bundle-analyzer: 4.4.2
+    webpack-cli: 4.7.2
+    webpack-dev-server: 3.11.2
+    webpack-merge: 5.8.0
+  languageName: unknown
+  linkType: soft
 
 "@szmarczak/http-timer@npm:^1.1.2":
   version: 1.1.2
@@ -9589,6 +9646,15 @@ __metadata:
   dependencies:
     is-arrayish: ^0.2.1
   checksum: c1c2b8b65f9c91b0f9d75f0debaa7ec5b35c266c2cac5de412c1a6de86d4cbae04ae44e510378cb14d032d0645a36925d0186f8bb7367bcc629db256b743a001
+  languageName: node
+  linkType: hard
+
+"error-stack-parser@npm:^2.0.6":
+  version: 2.0.6
+  resolution: "error-stack-parser@npm:2.0.6"
+  dependencies:
+    stackframe: ^1.1.1
+  checksum: bd8e048fcb1c0c74ab201271fec3b39c097a7c24bdef1718828d053c0584da5d7ad845253b5e4773803ee8e7450b23b0920e60a3b60dd403c1568c843058cb12
   languageName: node
   linkType: hard
 
@@ -20243,6 +20309,13 @@ sjcl@sublimator/sjcl:
   languageName: node
   linkType: hard
 
+"source-map@npm:0.5.6":
+  version: 0.5.6
+  resolution: "source-map@npm:0.5.6"
+  checksum: 390b3f5165c9631a74fb6fb55ba61e62a7f9b7d4026ae0e2bfc2899c241d71c1bccb8731c496dc7f7cb79a5f523406eb03d8c5bebe8448ee3fc38168e2d209c8
+  languageName: node
+  linkType: hard
+
 "source-map@npm:^0.5.0, source-map@npm:^0.5.3, source-map@npm:^0.5.6":
   version: 0.5.7
   resolution: "source-map@npm:0.5.7"
@@ -20415,12 +20488,49 @@ sjcl@sublimator/sjcl:
   languageName: node
   linkType: hard
 
+"stack-generator@npm:^2.0.5":
+  version: 2.0.5
+  resolution: "stack-generator@npm:2.0.5"
+  dependencies:
+    stackframe: ^1.1.1
+  checksum: a85c45a6f166319b31e9298da1e05b778b768553c2126eeeccfa5c4402fc810de1c541ec0b92db63238d68b3e08f4f57544adc27255e52f25f8edcabcc9caf63
+  languageName: node
+  linkType: hard
+
 "stack-utils@npm:^2.0.3":
   version: 2.0.3
   resolution: "stack-utils@npm:2.0.3"
   dependencies:
     escape-string-regexp: ^2.0.0
   checksum: c86ac08f58d1a9bce3f17946cb2f18268f55f8180f5396ae147deecb4d23cd54f3d27e4a8d3227d525b0f0c89b7f7e839e223851a577136a763ccd7e488440be
+  languageName: node
+  linkType: hard
+
+"stackframe@npm:^1.1.1, stackframe@npm:^1.2.0":
+  version: 1.2.0
+  resolution: "stackframe@npm:1.2.0"
+  checksum: 37d659bdd574e118a48c445a9a054a2b8dee6d6ad54eb16c51c7dae622c0f4994b9ff4e47d744aa6cfd14c00b477e145f34db3df78771f3e783ce8f357616d00
+  languageName: node
+  linkType: hard
+
+"stacktrace-gps@npm:^3.0.4":
+  version: 3.0.4
+  resolution: "stacktrace-gps@npm:3.0.4"
+  dependencies:
+    source-map: 0.5.6
+    stackframe: ^1.1.1
+  checksum: b98cb77632d38e6cbc243da4c47ca5f4bef918985c233bb4cfe8bfdc60fde92b53ce0630b16cf24d81560f1442e2ff92ccf6e2fe19031c90fb775d8e86037d9b
+  languageName: node
+  linkType: hard
+
+"stacktrace-js@npm:^2.0.2":
+  version: 2.0.2
+  resolution: "stacktrace-js@npm:2.0.2"
+  dependencies:
+    error-stack-parser: ^2.0.6
+    stack-generator: ^2.0.5
+    stacktrace-gps: ^3.0.4
+  checksum: 081e786d56188ac04ac6604c09cd863b3ca2b4300ec061366cf68c3e4ad9edaa34fb40deea03cc23a05f442aa341e9171f47313f19bd588f9bec6c505a396286
   languageName: node
   linkType: hard
 
@@ -22361,6 +22471,11 @@ sjcl@sublimator/sjcl:
     webpack-cli: 4.7.2
     webpack-dev-server: 3.11.2
     webpack-merge: 5.8.0
+  dependenciesMeta:
+    stacktrace-gps@3.0.4:
+      unplugged: true
+    stacktrace-js@2.0.2:
+      unplugged: true
   languageName: unknown
   linkType: soft
 

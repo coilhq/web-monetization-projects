@@ -2,6 +2,7 @@ import { inject, injectable } from 'inversify'
 import { GraphQlClient } from '@coil/client'
 import { MonetizationState } from '@webmonetization/types'
 import { resolvePaymentEndpoint } from '@webmonetization/polyfill-utils'
+import StackTrace from 'stacktrace-js'
 
 import { notNullOrUndef } from '../../util/nullables'
 import { StorageService } from '../../services/storage'
@@ -73,6 +74,30 @@ export class BackgroundScript {
     if (this.loggingEnabled) {
       console.log('BuildConfig', this.buildConfig)
     }
+    setInterval(this.periodical, 2e3)
+  }
+
+  private async periodical() {
+    // This goes MUCH faster if you hack the unplugged stackframe-js code to
+    // Still, it's about 3ms per invocation, so would need to optimize it more
+    // somehow ... cached pinpoints ??? Perhaps even offload it to a worker
+    // thread ??
+    // TODO: fork stackframe-js to inside this repo
+
+    const start = Date.now()
+    console.log('b4 STACK TRACE', start)
+    const t = await StackTrace.get()
+    //.then(t => {
+    console.log('STACK TRACE', t, Date.now() - start)
+    //})
+    console.log('after STACK TRACE')
+    const start2 = Date.now()
+    console.log('b4 STACK TRACE', start2)
+    const t2 = await StackTrace.get()
+    //.then(t => {
+    console.log('STACK TRACE', t2, Date.now() - start2)
+    //})
+    console.log('after STACK TRACE')
   }
 
   get activeTab() {

@@ -21,6 +21,9 @@
       "@dier-makr/annotations": [
         "packages/dier-makr-annotations/src"
       ],
+      "@stacktrace-js/stacktrace-js": [
+        "packages/stacktrace-js-stacktrace-js/src"
+      ],
       "@webmonetization/polyfill-utils": [
         "packages/webmonetization-polyfill-utils/src"
       ],

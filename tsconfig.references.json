@@ -18,6 +18,9 @@
       "path": "packages/dier-makr-annotations/tsconfig.build.json"
     },
     {
+      "path": "packages/stacktrace-js-stacktrace-js/tsconfig.build.json"
+    },
+    {
       "path": "packages/webmonetization-polyfill-utils/tsconfig.build.json"
     },
     {

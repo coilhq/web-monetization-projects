@@ -69,6 +69,8 @@
     "react": "^17.0.0",
     "react-dom": "^17.0.0",
     "reduct": "^3.3.1",
+    "stacktrace-gps": "^3.0.4",
+    "stacktrace-js": "^2.0.2",
     "uuid": "^8.3.2"
   },
   "devDependencies": {

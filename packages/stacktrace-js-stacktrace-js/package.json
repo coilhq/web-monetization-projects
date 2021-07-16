@@ -1,50 +1,39 @@
 {
-  "name": "web-monetization",
+  "$schema": "../coil-monorepo-upkeep/resources/package-json-schema-nested-overrides.json",
+  "name": "@stacktrace-js/stacktrace-js",
   "version": "0.0.0",
-  "private": true,
-  "repository": {
-    "type": "git",
-    "url": "git@github.com:coilhq/web-monetization-projects.git"
-  },
-  "scripts": {
-    "lint": "eslint --cache --cache-location node_modules/.cache/eslint",
-    "test": "jest --passWithNoTests",
-    "test:coverage": "yarn test --coverage --verbose",
-    "prettier": "prettier --write 'packages/*/*.{html,js,ts,tsx,jsx,md}' 'packages/*/{src,test}/**/*.{ts,tsx,js,jsx,html,md}'",
-    "format": "yarn prettier && LINT_FIX=1 yarn lint:all --fix --quiet",
-    "upkeep": "ts-node -T packages/coil-monorepo-upkeep/upkeep.ts",
-    "upkeep:new-package": "ts-node -T packages/coil-monorepo-upkeep/new-package.ts",
-    "upkeep:check-updates": "ts-node -T packages/coil-monorepo-upkeep/check-updates.ts",
-    "clean:build": "rimraf packages/*/build",
-    "build:ts": "tsc --build tsconfig.references.json",
-    "build:ts:verbose": "yarn build:ts --verbose",
-    "lint:all": "yarn lint 'packages/*/{src,test}/**/*.ts*'",
-    "lint:staged": "lint-staged --shell",
-    "postinstall": "husky install"
-  },
   "keywords": [
     "ilp",
     "web-monetization"
   ],
-  "author": "Coil Team <info@coil.com>",
-  "license": "Apache-2.0",
-  "workspaces": [
-    "packages/*"
-  ],
-  "lint-staged": {
-    "*.{md,js,jsx,html}": [
-      "prettier --write"
-    ],
-    "*.ts*": [
-      "prettier --write",
-      "yarn lint --fix"
-    ]
+  "homepage": "https://github.com/coilhq/web-monetization-projects/tree/main/packages/stacktrace-js-stacktrace-js",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:coilhq/web-monetization-projects.git"
   },
-  "resolutions": {
-    "@types/webpack": "5.28.0",
-    "@types/express": "4.17.8",
-    "@types/react": "17.0.14",
-    "@wext/shipit": "patch:@wext/shipit@npm:0.2.1#.yarn/patches/@wext-shipit-npm-0.2.1-0aefb3f515"
+  "license": "Apache-2.0",
+  "author": "Coil Team <info@coil.com>",
+  "main": "./build",
+  "types": "./build",
+  "scripts": {
+    "precommit": "echo lint-staged runs from root",
+    "prettier": "prettier --write '*.{ts,tsx,js,html,jsx,md}' '{src,test}/**/*.{ts,tsx,js,html,jsx,md}'",
+    "format": "yarn prettier && LINT_FIX=1 yarn lint:all --fix --quiet",
+    "build:ts": "tsc --build tsconfig.build.json",
+    "build:ts:watch": "yarn build:ts --watch",
+    "build:ts:verbose": "yarn build:ts --verbose",
+    "clean:build": "rimraf build",
+    "upkeep": "cd ../.. && yarn upkeep",
+    "lint:all": "yarn lint 'src/**/*.{ts,tsx}' 'test/**/*.{ts,tsx}'",
+    "lint": "eslint --cache --cache-location ../../node_modules/.cache/eslint",
+    "test": "jest --passWithNoTests",
+    "test:coverage": "yarn test --verbose --coverage"
+  },
+  "dependencies": {
+    "error-stack-parser": "^2.0.6",
+    "stack-generator": "^2.0.5",
+    "stackframe": "^1.2.0",
+    "stacktrace-gps": "^3.0.4"
   },
   "devDependencies": {
     "@babel/core": "7.14.6",
@@ -91,16 +80,5 @@
     "webpack-cli": "4.7.2",
     "webpack-dev-server": "3.11.2",
     "webpack-merge": "5.8.0"
-  },
-  "engines": {
-    "node": ">= 14.0.0"
-  },
-  "dependenciesMeta": {
-    "stacktrace-gps@3.0.4": {
-      "unplugged": true
-    },
-    "stacktrace-js@2.0.2": {
-      "unplugged": true
-    }
   }
 }
